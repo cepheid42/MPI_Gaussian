@@ -1,0 +1,25 @@
+gauss_external_input.c: 
+The program takes one parameter as the input matrix.  
+
+Six matrices (extracted from real-world problems) are available 
+for your testing: (in matrices_dense subfolder)
+    jpwh_991.dat	(size:   991)
+    orsreg_1.dat     (size:  2205)
+    sherman5.dat	(size:  3312)
+    saylr4.dat	(size:  3564)
+    sherman3.dat	(size:  5005)
+    memplus.dat      (size: 17758)
+However, I believe memplus.dat is too large so you probably
+shouldn't try.
+
+An additional artificially generated dense matrix is also availble
+for your testing:
+    /u/cs458/apps/gauss/seq/matrices_dense/matrix_2000.dat
+    Additional matrices can be generated using matrix_gen in
+    matrix_dense folder. Usage: ./matrix_gen <size> >> newfile.dat
+
+gauss_internal_input.c:
+
+Takes matrix size as input and generates the matrix internally. 
+Usage: ./gauss_internal_input -s <matrix size> 
+
