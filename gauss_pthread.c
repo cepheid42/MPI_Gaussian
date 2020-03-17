@@ -51,20 +51,15 @@ void allocate_memory() {
 
 /* Initialize the matrix, but multithreaded! */
 
-void *initMatrix(void *s) {
-    int slice = (int) s;
-    int from = (slice * NSIZE) / NUM_PROCS;
-    int to = ((slice + 1) * NSIZE) / NUM_PROCS;
-
+void initMatrix() {
     int i,j;
-    for(i = from ; i < to; i++){
+    for(i = 0 ; i < NSIZE; i++){
         for(j = 0; j < NSIZE; j++) {
             matrix[i][j] = ((j < i ) ? 2*(j+1) : 2*(i+1));
         }
         B[i] = (double) i;
         swap[i] = i;
     }
-    pthread_exit(NULL);
 }
 
 /* Get the pivot row. If the value in the current pivot position is 0,
@@ -145,27 +140,36 @@ void computeGauss() {
     int j;
     gauss_threads = (pthread_t*) malloc(NUM_PROCS * sizeof(pthread_t));
 
-    gettimeofday(&total_start, 0);
-
     for(j = 0; j < NSIZE; j++){
         getPivot(j);
         J = j;  // Set global iteration counter.
 
-        if (NSIZE != 1) {
-            // Spawn Threads to compute Gaussian on remaining rows
-            for (int ind = 0; ind < NUM_PROCS; ind++){
-                pthread_create(&gauss_threads[ind], NULL, multiGauss, (void*) ind);
-            }
+        // Spawn Threads to compute Gaussian on remaining rows
+        for (int ind = 0; ind < NUM_PROCS; ind++){
+            pthread_create(&gauss_threads[ind], NULL, multiGauss, (void*) ind);
+        }
 
-            for (int ind = 0; ind < NUM_PROCS; ind++){
-                pthread_join(gauss_threads[ind], NULL);
-            }
-        } else {
-            // Doesn't spawn threads on single processor
-            multiGauss(0);
+        for (int ind = 0; ind < NUM_PROCS; ind++){
+            pthread_join(gauss_threads[ind], NULL);
         }
     }
-    gettimeofday(&total_finish, 0);
+}
+
+void singleGauss() {
+    int i;
+    double pivotVal;
+    for(i = 0; i < NSIZE; i++) {
+        getPivot(i);
+        pivotVal = matrix[i][i];
+        for (int j = i + 1; j < NSIZE; j++) {
+            pivotVal = matrix[j][i];
+            matrix[j][i] = 0.0;
+            for (int k = i + 1; k < NSIZE; k++) {
+                matrix[j][k] -= pivotVal * matrix[i][k];
+            }
+            B[j] -= pivotVal * B[i];
+        }
+    }
 }
 
 
@@ -198,6 +202,7 @@ void calc_time() {
     printf("Pthread time: %f Secs\n", (double) the_time / 1000000.0);
 }
 
+extern char* optarg;
 int main(int argc,char *argv[]) {
     int i;
     int verify = 0;
@@ -237,28 +242,25 @@ int main(int argc,char *argv[]) {
         }
     }
 
-    allocate_memory(NSIZE);
-
-    /* Spawn threads for matrix initialization */
-    init_threads = (pthread_t*) malloc(NUM_PROCS * sizeof(pthread_t));
-    for (int ind = 0; ind < NUM_PROCS; ind++){
-        pthread_create(&init_threads[ind], NULL, initMatrix, (void*) ind);
-    }
-
-    for (int ind = 0; ind < NUM_PROCS; ind++){
-        pthread_join(init_threads[ind], NULL);
-    }
+    allocate_memory();
+    initMatrix();
 
 
     /* pthread solver */
-    computeGauss();
+    gettimeofday(&total_start, 0);
+    if (NUM_PROCS == 1){
+        singleGauss();
+    } else {
+        computeGauss();
+    }
+    gettimeofday(&total_finish, 0);
     calc_time();
 
 
     /* Linear Solver for Verification */
     if(verify) {
         gettimeofday(&total_start, 0);
-        solveGauss();
+        singleGauss();
         gettimeofday(&total_finish, 0);
         long compTime;
         double the_time;
