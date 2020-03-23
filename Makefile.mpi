@@ -1,27 +1,5 @@
-.SUFFIXES: .o .c
-
-CC = mpicc
-CFLAGS = -g
-LFLAGS =
-
-CTAGS = ctags
-BIN = mpi_gauss
-CFILES = gauss_mpi.c
-OBJECTS = gauss_mpi.o
-HFILES =
-OTHERSOURCES =
-SOURCES =   $(HFILES) $(CFILES) $(OTHERSOURCES)
-
-.c.o:
-	$(CC) -c $(CFLAGS) $*.c
-
-$(BIN): $(OBJECTS)
-	$(CC) $(LFLAGS) -o $(BIN) $(OBJECTS)
-
-tags: $(CFILES) $(HFILES) $(EXTRACTCFILES) $(RECOGCFILES)
-# for vi:
-	$(CTAGS) -d -t -T -w $(CFILES) $(HFILES)
-	sort -o tags tags
+mpi_gauss: gauss_mpi.c
+	mpicc -O3 -g gauss_mpi.c -o mpi_gauss
 
 clean:
-	-rm $(BIN) $(OBJECTS)
+	rm mpi_gauss

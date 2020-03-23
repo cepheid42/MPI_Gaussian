@@ -256,8 +256,15 @@ int main(int argc,char *argv[]) {
     gettimeofday(&total_finish, 0);
     calc_time();
 
+	printf("Matrix array is:\n");
+	for (int i = 0; i < NSIZE; i++) {
+		for (int j = 0; j < NSIZE; j++) {
+			printf("%.0f ", matrix[i][j]);
+		}
+		printf("\n");
+	}
 
-    /* Linear Solver for Verification */
+    /* Linear Solver for Verification */ 8
     if(verify) {
         gettimeofday(&total_start, 0);
         singleGauss();
