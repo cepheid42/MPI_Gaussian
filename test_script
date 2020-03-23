@@ -10,8 +10,9 @@ touch test.txt
 
 
 echo "1 processor test."
-# 1 proc
 echo "1 process" >> test.txt
+
+# 1 proc
 ./p_gauss -s 8192 -n 1 >> test.txt
 echo "pthread completed."
 ./omp_gauss -s 8192 -n 1 >> test.txt
@@ -20,8 +21,9 @@ mpirun -np 1 ./mpi_gauss -s 8192 >> test.txt
 echo "mpi completed."
 
 echo "2 processor test."
-# 2 proc
 echo -e "\n2 process" >> test.txt
+
+# 2 proc
 ./p_gauss -s 8192 -n 2 >> test.txt
 echo "pthread completed."
 ./omp_gauss -s 8192 -n 2 >> test.txt

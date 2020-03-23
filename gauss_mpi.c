@@ -162,13 +162,11 @@ int main(int argc, char **argv) {
 		}
 	}
 
-//	printf("Testing 0.\n");
 
 	MPI_Init(&argc, &argv);
 	MPI_Comm_size(MPI_COMM_WORLD, &nprocs);
 	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
-//	printf("Testing 1.\n");
 	if (rank == 0) {
 		/* Allocate stuff in root */
 		malloc2dchar(&global, NSIZE, NSIZE);
@@ -178,14 +176,14 @@ int main(int argc, char **argv) {
 		/* Initialize matrix with values */
 		initMatrix(global, B, swap);
 	}
-//	printf("Testing 2.\n");
+
 	/* Get start time */
 	MPI_Barrier(MPI_COMM_WORLD);
 	if(rank == 0) {
 		gettimeofday(&total_start, NULL);
 	}
 	MPI_Barrier(MPI_COMM_WORLD);
-//	printf("Testing 3.\n");
+
 	/* Start iterating over all rows */
 	for(int i = 0; i < NSIZE; i++) {
 		MPI_Barrier(MPI_COMM_WORLD);    // Everybody synchronizes here
@@ -285,8 +283,6 @@ int main(int argc, char **argv) {
 
 		/* don't need the local data anymore */
 		free2dchar(&local);
-//		free(local_B);
-//		free(local_i);
 
 		/* or the MPI data type */
 		MPI_Type_free(&subarrtype);
@@ -297,33 +293,33 @@ int main(int argc, char **argv) {
 		/* Get end time and print */
 		gettimeofday(&total_finish, NULL);
 		time = calc_time(&total_start, &total_finish);
-		printf("MPI time: %f\n", time);
+		printf("%f, \n", time);
 
-		/* Single Process Solver for Comparison */
-		if(verify) {
-			double **single, *b;
-			int *swp;
-
-			malloc2dchar(&single, NSIZE, NSIZE);
-			b = (double *) malloc(NSIZE * sizeof(double));
-			swp = (int*) malloc(NSIZE * sizeof(int));
-
-			initMatrix(single, b, swp);
-
-			matrix = single;
-
-			gettimeofday(&total_start, 0);
-			singleGauss(b, swp);
-			gettimeofday(&total_finish, 0);
-			long compTime;
-			double the_time;
-
-			compTime = (total_finish.tv_sec - total_start.tv_sec) * 1000000;
-			compTime = compTime + (total_finish.tv_usec - total_start.tv_usec);
-			the_time = (double) compTime;
-			printf("%f, ", (double) the_time / 1000000.0);
-			free2dchar(&single);
-		}
+//		/* Single Process Solver for Comparison */
+//		if(verify) {
+//			double **single, *b;
+//			int *swp;
+//
+//			malloc2dchar(&single, NSIZE, NSIZE);
+//			b = (double *) malloc(NSIZE * sizeof(double));
+//			swp = (int*) malloc(NSIZE * sizeof(int));
+//
+//			initMatrix(single, b, swp);
+//
+//			matrix = single;
+//
+//			gettimeofday(&total_start, 0);
+//			singleGauss(b, swp);
+//			gettimeofday(&total_finish, 0);
+//			long compTime;
+//			double the_time;
+//
+//			compTime = (total_finish.tv_sec - total_start.tv_sec) * 1000000;
+//			compTime = compTime + (total_finish.tv_usec - total_start.tv_usec);
+//			the_time = (double) compTime;
+//			printf("%f, ", (double) the_time / 1000000.0);
+//			free2dchar(&single);
+//		}
 		/* free the global array */
 		free2dchar(&global);
 	}

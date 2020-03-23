@@ -176,7 +176,7 @@ void solveGauss(int nsize)
     }
 }
 
-extern char * optarg;
+
 int main(int argc,char *argv[])
 {
     int i;
@@ -233,16 +233,16 @@ int main(int argc,char *argv[])
 
     printf("%f,",(double)Time/1000000.0);
 
-    if(verify) {
-        gettimeofday(&start, 0);
-        singleGauss(NSIZE);
-        gettimeofday(&finish, 0);
-        double the_time;
-
-        compTime = (finish.tv_sec - start.tv_sec) * 1000000;
-        compTime = compTime + (finish.tv_usec - start.tv_usec);
-        the_time = (double) compTime;
-        printf("Verification time: %f Secs\n", (double) the_time / 1000000.0);
-    }
+//    if(verify) {
+//        gettimeofday(&start, 0);
+//        singleGauss(NSIZE);
+//        gettimeofday(&finish, 0);
+//        double the_time;
+//
+//        compTime = (finish.tv_sec - start.tv_sec) * 1000000;
+//        compTime = compTime + (finish.tv_usec - start.tv_usec);
+//        the_time = (double) compTime;
+//        printf("Verification time: %f Secs\n", (double) the_time / 1000000.0);
+//    }
     return 0;
 }

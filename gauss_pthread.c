@@ -256,19 +256,19 @@ int main(int argc,char *argv[]) {
     gettimeofday(&total_finish, 0);
     calc_time();
 
-    /* Linear Solver for Verification */
-    if(verify) {
-        gettimeofday(&total_start, 0);
-        singleGauss();
-        gettimeofday(&total_finish, 0);
-        long compTime;
-        double the_time;
-
-        compTime = (total_finish.tv_sec - total_start.tv_sec) * 1000000;
-        compTime = compTime + (total_finish.tv_usec - total_start.tv_usec);
-        the_time = (double) compTime;
-        printf("Verification time: %f Secs\n", (double) the_time / 1000000.0);
-    }
+//    /* Linear Solver for Verification */
+//    if(verify) {
+//        gettimeofday(&total_start, 0);
+//        singleGauss();
+//        gettimeofday(&total_finish, 0);
+//        long compTime;
+//        double the_time;
+//
+//        compTime = (total_finish.tv_sec - total_start.tv_sec) * 1000000;
+//        compTime = compTime + (total_finish.tv_usec - total_start.tv_usec);
+//        the_time = (double) compTime;
+//        printf("Verification time: %f Secs\n", (double) the_time / 1000000.0);
+//    }
 
     return 0;
 }
