@@ -199,7 +199,7 @@ void calc_time() {
     compTime = (total_finish.tv_sec - total_start.tv_sec) * 1000000;
     compTime = compTime + (total_finish.tv_usec - total_start.tv_usec);
     the_time = (double) compTime;
-    printf("Pthread time: %f Secs\n", (double) the_time / 1000000.0);
+    printf("%f, ", (double) the_time / 1000000.0);
 }
 
 extern char* optarg;
@@ -256,15 +256,7 @@ int main(int argc,char *argv[]) {
     gettimeofday(&total_finish, 0);
     calc_time();
 
-	printf("Matrix array is:\n");
-	for (int i = 0; i < NSIZE; i++) {
-		for (int j = 0; j < NSIZE; j++) {
-			printf("%.0f ", matrix[i][j]);
-		}
-		printf("\n");
-	}
-
-    /* Linear Solver for Verification */ 8
+    /* Linear Solver for Verification */
     if(verify) {
         gettimeofday(&total_start, 0);
         singleGauss();

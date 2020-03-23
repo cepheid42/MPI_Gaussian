@@ -231,7 +231,7 @@ int main(int argc,char *argv[])
     compTime = compTime + (finish.tv_usec - start.tv_usec);
     Time = (double)compTime;
 
-    printf("Application time: %f Secs\n",(double)Time/1000000.0);
+    printf("%f,",(double)Time/1000000.0);
 
     if(verify) {
         gettimeofday(&start, 0);

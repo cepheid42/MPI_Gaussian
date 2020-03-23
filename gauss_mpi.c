@@ -321,7 +321,7 @@ int main(int argc, char **argv) {
 			compTime = (total_finish.tv_sec - total_start.tv_sec) * 1000000;
 			compTime = compTime + (total_finish.tv_usec - total_start.tv_usec);
 			the_time = (double) compTime;
-			printf("Verification time: %f Secs\n", (double) the_time / 1000000.0);
+			printf("%f, ", (double) the_time / 1000000.0);
 			free2dchar(&single);
 		}
 		/* free the global array */

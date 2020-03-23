@@ -1,0 +1,53 @@
+#!/bin/bash
+
+module load mpi
+
+make -f Makefile.omp
+make -f Makefile.mpi
+make -f Makefile.pthread
+
+touch test.txt
+
+# 1 proc
+echo "1 process" >> test.txt
+./p_gauss -s 8192 -n 1 >> test.txt
+./omp_gauss -s 8192 -n 1 >> test.txt
+mpirun -np 1 ./mpi_gauss -s 8192 >> test.txt
+
+# 2 proc
+echo -e "\n2 process" >> test.txt
+./p_gauss -s 8192 -n 2 >> test.txt
+./omp_gauss -s 8192 -n 2 >> test.txt
+mpirun -np 2 ./mpi_gauss -s 8192 >> test.txt
+
+# 4 proc
+echo -e "\n4 process" >> test.txt
+./p_gauss -s 8192 -n 4 >> test.txt
+./omp_gauss -s 8192 -n 4 >> test.txt
+mpirun -np 4 ./mpi_gauss -s 8192 >> test.txt
+
+# 8 proc
+echo -e "\n8 process" >> test.txt
+./p_gauss -s 8192 -n 8 >> test.txt
+./omp_gauss -s 8192 -n 8 >> test.txt
+mpirun -np 8 ./mpi_gauss -s 8192 >> test.txt
+
+# 16 proc
+echo -e "\n16 process" >> test.txt
+./p_gauss -s 8192 -n 16 >> test.txt
+./omp_gauss -s 8192 -n 16 >> test.txt
+mpirun -np 16 ./mpi_gauss -s 8192 >> test.txt
+
+# 32 proc
+echo -e "\n32 process" >> test.txt
+./p_gauss -s 8192 -n 32 >> test.txt
+./omp_gauss -s 8192 -n 32 >> test.txt
+mpirun -np 32 ./mpi_gauss -s 8192 >> test.txt
+
+# 64 proc
+echo -e "\n64 process" >> test.txt
+./p_gauss -s 8192 -n 64 >> test.txt
+./omp_gauss -s 8192 -n 64 >> test.txt
+mpirun -np 64 ./mpi_gauss -s 8192 >> test.txt
+
+rm mpi_gauss omp_gauss p_gauss
