@@ -8,46 +8,76 @@ make -f Makefile.pthread
 
 touch test.txt
 
+
+echo "1 processor test."
 # 1 proc
 echo "1 process" >> test.txt
 ./p_gauss -s 8192 -n 1 >> test.txt
+echo "pthread completed."
 ./omp_gauss -s 8192 -n 1 >> test.txt
+echo "omp completed."
 mpirun -np 1 ./mpi_gauss -s 8192 >> test.txt
+echo "mpi completed."
 
+echo "2 processor test."
 # 2 proc
 echo -e "\n2 process" >> test.txt
 ./p_gauss -s 8192 -n 2 >> test.txt
+echo "pthread completed."
 ./omp_gauss -s 8192 -n 2 >> test.txt
+echo "omp completed."
 mpirun -np 2 ./mpi_gauss -s 8192 >> test.txt
+echo "mpi completed."
 
+echo "4 processor test."
 # 4 proc
 echo -e "\n4 process" >> test.txt
 ./p_gauss -s 8192 -n 4 >> test.txt
+echo "pthread completed."
 ./omp_gauss -s 8192 -n 4 >> test.txt
+echo "omp completed."
 mpirun -np 4 ./mpi_gauss -s 8192 >> test.txt
+echo "mpi completed."
 
+echo "8 processor test."
 # 8 proc
 echo -e "\n8 process" >> test.txt
 ./p_gauss -s 8192 -n 8 >> test.txt
+echo "pthread completed."
 ./omp_gauss -s 8192 -n 8 >> test.txt
+echo "omp completed."
 mpirun -np 8 ./mpi_gauss -s 8192 >> test.txt
+echo "mpi completed."
 
+echo "16 processor test."
 # 16 proc
 echo -e "\n16 process" >> test.txt
 ./p_gauss -s 8192 -n 16 >> test.txt
+echo "pthread completed."
 ./omp_gauss -s 8192 -n 16 >> test.txt
+echo "omp completed."
 mpirun -np 16 ./mpi_gauss -s 8192 >> test.txt
+echo "mpi completed."
 
+echo "32 processor test."
 # 32 proc
 echo -e "\n32 process" >> test.txt
 ./p_gauss -s 8192 -n 32 >> test.txt
+echo "pthread completed."
 ./omp_gauss -s 8192 -n 32 >> test.txt
+echo "omp completed."
 mpirun -np 32 ./mpi_gauss -s 8192 >> test.txt
+echo "mpi completed."
 
+echo "64 processor test."
 # 64 proc
 echo -e "\n64 process" >> test.txt
 ./p_gauss -s 8192 -n 64 >> test.txt
+echo "pthread completed."
 ./omp_gauss -s 8192 -n 64 >> test.txt
+echo "omp completed."
 mpirun -np 64 ./mpi_gauss -s 8192 >> test.txt
+echo "mpi completed."
+
 
 rm mpi_gauss omp_gauss p_gauss
