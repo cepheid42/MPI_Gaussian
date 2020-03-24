@@ -1,0 +1,65 @@
+#!/bin/bash
+
+size=$1
+
+filename="test_${size}_nodes.txt"
+
+make -f Makefile.mpi
+
+touch $filename
+
+# -------------------1 proc --------------------
+echo "1 processor test."
+echo "1 process" >> $filename
+
+mpirun -np 1 -hostfile hosts ./mpi_gauss -s $size >> $filename
+echo "mpi completed."
+
+
+# ------------------2 proc---------------------
+echo "2 processor test."
+echo -e "\n2 process" >> $filename
+
+mpirun -np 2 -hostfile hosts ./mpi_gauss -s $size >> $filename
+echo "mpi completed."
+
+
+# ------------------4 proc --------------------
+echo "4 processor test."
+echo -e "\n4 process" >> $filename
+
+mpirun -np 4 -hostfile hosts ./mpi_gauss -s $size >> $filename
+echo "mpi completed."
+
+
+# -------------------8 proc --------------------
+echo "8 processor test."
+echo -e "\n8 process" >> $filename
+
+mpirun -np 8 -hostfile hosts ./mpi_gauss -s $size >> $filename
+echo "mpi completed."
+
+
+# ------------------16 proc---------------------
+echo "16 processor test."
+echo -e "\n16 process" >> $filename
+
+mpirun -np 16 -hostfile hosts ./mpi_gauss -s $size >> $filename
+echo "mpi completed."
+
+
+# ------------------32 proc --------------------
+echo "32 processor test."
+echo -e "\n32 process" >> $filename
+
+mpirun -np 32 -hostfile hosts ./mpi_gauss -s $size >> $filename
+echo "mpi completed."
+
+# ------------------64 proc --------------------
+echo "64 processor test."
+echo -e "\n64 process" >> $filename
+
+mpirun -np 64 -hostfile hosts ./mpi_gauss -s $size >> $filename
+echo "mpi completed."
+
+rm mpi_gauss
