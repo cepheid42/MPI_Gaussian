@@ -295,31 +295,6 @@ int main(int argc, char **argv) {
 		time = calc_time(&total_start, &total_finish);
 		printf("%f, \n", time);
 
-//		/* Single Process Solver for Comparison */
-//		if(verify) {
-//			double **single, *b;
-//			int *swp;
-//
-//			malloc2dchar(&single, NSIZE, NSIZE);
-//			b = (double *) malloc(NSIZE * sizeof(double));
-//			swp = (int*) malloc(NSIZE * sizeof(int));
-//
-//			initMatrix(single, b, swp);
-//
-//			matrix = single;
-//
-//			gettimeofday(&total_start, 0);
-//			singleGauss(b, swp);
-//			gettimeofday(&total_finish, 0);
-//			long compTime;
-//			double the_time;
-//
-//			compTime = (total_finish.tv_sec - total_start.tv_sec) * 1000000;
-//			compTime = compTime + (total_finish.tv_usec - total_start.tv_usec);
-//			the_time = (double) compTime;
-//			printf("%f, ", (double) the_time / 1000000.0);
-//			free2dchar(&single);
-//		}
 		/* free the global array */
 		free2dchar(&global);
 	}
