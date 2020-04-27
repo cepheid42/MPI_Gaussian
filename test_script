@@ -1,6 +1,6 @@
 #!/bin/bash
 
-size=128
+size=$1
 filename="test_${size}.txt"
 
 module load mpi

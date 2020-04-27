@@ -1,0 +1,20 @@
+1 process
+0.015381, 
+
+2 process
+1.283718, 
+
+4 process
+28.154161, 
+
+8 process
+20.801847, 
+
+16 process
+63.963482, 
+
+32 process
+82.339350, 
+
+64 process
+104.422721, 

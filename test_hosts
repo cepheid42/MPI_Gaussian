@@ -1,6 +1,11 @@
 #!/bin/bash
 
+<<<<<<< HEAD
 size=128
+=======
+size=$1
+
+>>>>>>> 8ec983b70342dafdb2565cae75b28e9a74f5ea99
 filename="test_${size}_nodes.txt"
 
 make -f Makefile.mpi
@@ -33,17 +38,28 @@ echo "mpi completed."
 
 # -------------------8 proc --------------------
 echo "8 processor test."
+<<<<<<< HEAD
 echo "8 process" >> $filename
+=======
+echo -e "\n8 process" >> $filename
+>>>>>>> 8ec983b70342dafdb2565cae75b28e9a74f5ea99
 
 mpirun -np 8 -hostfile hosts ./mpi_gauss -s $size >> $filename
 echo "mpi completed."
 
 
 # ------------------16 proc---------------------
+<<<<<<< HEAD
 echo "26 processor test."
 echo -e "\n26 process" >> $filename
 
 mpirun -np 26 -hostfile hosts ./mpi_gauss -s $size >> $filename
+=======
+echo "16 processor test."
+echo -e "\n16 process" >> $filename
+
+mpirun -np 16 -hostfile hosts ./mpi_gauss -s $size >> $filename
+>>>>>>> 8ec983b70342dafdb2565cae75b28e9a74f5ea99
 echo "mpi completed."
 
 
@@ -61,4 +77,8 @@ echo -e "\n64 process" >> $filename
 mpirun -np 64 -hostfile hosts ./mpi_gauss -s $size >> $filename
 echo "mpi completed."
 
+<<<<<<< HEAD
 rm mpi_gauss omp_gauss p_gauss
+=======
+rm mpi_gauss
+>>>>>>> 8ec983b70342dafdb2565cae75b28e9a74f5ea99
